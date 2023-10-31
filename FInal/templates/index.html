@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <title>Charlottes Web</title>
+</head>
+<body>
+    <h1>Trabalho de Conclusao de Curso</h1>
+    <h2> Charllotes web version </h2>
+    <img src="{{ url_for('video_feed') }}">
+    <p id="olhosD"></p>
+    <p id="olhosC"></p>
+    <p id="olhosE"></p>
+    <p id="olhosF"></p>
+    <p id="olhosN"></p>
+
+    <script>
+        function getVariables() {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', '/status', true);
+            xhr.onload = function () {
+                if (xhr.readyState == 4 && xhr.status == "200") {
+                    var data = JSON.parse(xhr.responseText);
+                    document.getElementById('olhosD').textContent = data.olhosD;
+                    document.getElementById('olhosC').textContent = data.olhosC;
+                    document.getElementById('olhosE').textContent = data.olhosE;
+                    document.getElementById('olhosF').textContent = data.olhosF;
+                    document.getElementById('olhosN').textContent = data.olhosN;
+                } else {
+                    console.error(xhr.responseText);
+                }
+            }
+            xhr.send(null);
+        }
+
+        setInterval(getVariables, 1000);  // Atualiza os valores a cada 1 segundo
+    </script>
+</body>
+</html>
